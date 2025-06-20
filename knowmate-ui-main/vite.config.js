@@ -63,7 +63,16 @@ export default defineConfig({
       "dayjs/plugin/weekOfYear.js",
       "dayjs/plugin/weekYear.js",
     ],
-    exclude: ["element-plus"],
+    exclude: [
+      "element-plus",
+      "naive-ui",
+      "vue",
+      "vue-router",
+      "pinia",
+      "axios",
+      "@vueuse/core",
+      "@element-plus/icons-vue",
+    ],
   },
   build: {
     commonjsOptions: {

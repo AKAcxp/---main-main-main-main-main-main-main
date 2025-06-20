@@ -124,9 +124,13 @@ public class JwtUtil {
      * @return 用户ID
      */
     public static Long getUserIdFromRequest(HttpServletRequest request) {
+        log.info("getUserIdFromRequest: 开始从请求中提取用户ID");
         String authHeader = request.getHeader("Authorization");
+        log.info("getUserIdFromRequest: Authorization头: {}", authHeader);
+
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
+            log.info("getUserIdFromRequest: 提取到token: {}", token);
             try {
                 // 使用配置的密钥，而不是硬编码的密钥
                 // 注意：由于这是静态方法，我们无法直接访问实例变量signingKey
@@ -134,7 +138,7 @@ public class JwtUtil {
                 Key tempSigningKey = Keys.hmacShaKeyFor(
                         "smart_diet_secret_123456789012345678901234567890".getBytes(StandardCharsets.UTF_8));
 
-                log.debug("getUserIdFromRequest: Attempting to extract userId from token");
+                log.info("getUserIdFromRequest: 尝试从token中提取userId");
 
                 Claims claims = Jwts.parserBuilder()
                         .setSigningKey(tempSigningKey)
@@ -142,15 +146,22 @@ public class JwtUtil {
                         .parseClaimsJws(token)
                         .getBody();
 
+                log.info("getUserIdFromRequest: 成功解析token，claims: {}", claims);
+
                 Long userId = claims.get("userId", Long.class);
-                log.debug("getUserIdFromRequest: Successfully extracted userId: {}", userId);
+                log.info("getUserIdFromRequest: 成功提取userId: {}", userId);
                 return userId;
+            } catch (ExpiredJwtException e) {
+                log.error("getUserIdFromRequest: Token已过期: {}", e.getMessage());
+                return null;
             } catch (Exception e) {
-                log.error("getUserIdFromRequest: Failed to extract userId from token: {}", e.getMessage());
+                log.error("getUserIdFromRequest: 从token提取userId失败: {}, 异常类型: {}", e.getMessage(),
+                        e.getClass().getName());
+                e.printStackTrace(); // 打印完整堆栈跟踪以便调试
                 return null;
             }
         }
-        log.warn("getUserIdFromRequest: No Authorization header or not a Bearer token");
+        log.warn("getUserIdFromRequest: 没有Authorization头或不是Bearer token");
         return null;
     }
 

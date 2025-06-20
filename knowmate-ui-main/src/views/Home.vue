@@ -116,11 +116,26 @@ const testExerciseLogAPI = async () => {
     const token = localStorage.getItem('authToken');
     console.log('当前Token:', token);
     
+    // 显示请求头信息
+    console.log('请求头:', {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    
     const response = await axios.get('/api/exerciselog');
     console.log('运动日志API响应:', response.data);
     message.success('运动日志API测试成功');
   } catch (error) {
     console.error('运动日志API测试失败:', error);
+    if (error.response) {
+      console.error('错误响应:', error.response.data);
+      console.error('状态码:', error.response.status);
+      console.error('响应头:', error.response.headers);
+    } else if (error.request) {
+      console.error('请求发送但未收到响应:', error.request);
+    } else {
+      console.error('请求配置出错:', error.message);
+    }
     message.error('运动日志API测试失败: ' + (error.response?.data?.message || error.message));
   }
 };
