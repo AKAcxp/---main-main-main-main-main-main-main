@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.knowmateadmin.mapper.ExerciseLogMapper">
+
+    <!-- This XML file is intentionally left minimal as mappings are handled by annotations in ExerciseLogMapper.java -->
+
+    <!-- You can add other custom SQL mappings for ExerciseLogMapper here if needed in the future -->
+
+</mapper> 

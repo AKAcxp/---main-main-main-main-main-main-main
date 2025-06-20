@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.knowmateadmin.mapper.UserInfoMapper">
+    
+    <select id="selectByUsername" resultType="org.example.knowmateadmin.entity.UserInfo">
+        SELECT * FROM user_info WHERE username = #{username}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO user_info(username, height, weight, goal, preference, avoid_food, updated_at)
+        VALUES(#{username}, #{height}, #{weight}, #{goal}, #{preference}, #{avoidFood}, NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE user_info
+        SET height = #{height},
+            weight = #{weight},
+            goal = #{goal},
+            preference = #{preference},
+            avoid_food = #{avoidFood},
+            updated_at = NOW()
+        WHERE username = #{username}
+    </update>
+</mapper> 

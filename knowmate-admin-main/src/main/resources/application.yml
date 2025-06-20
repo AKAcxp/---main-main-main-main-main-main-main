@@ -1,0 +1,60 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: smart_diet
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://debian:3306/smart_diet?useSSL=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 778057151
+  # 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  # 静态资源访问配置
+  mvc:
+    static-path-pattern: /**
+  web:
+    resources:
+      static-locations: classpath:/static/,file:./uploads/
+
+# 文件上传目录配置
+file:
+  upload-dir: ./uploads
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# JWT Configuration
+jwt:
+  secret: smart_diet_secret_123456789012345678901234567890
+  expiration: 86400000
+
+# AI 配置
+ai:
+  googleKey: AIzaSyDCbR4KyhzGAGnKjcEHlVvqDviEHQ4l3mM
+  proxyEnabled: true
+  proxyHost: 127.0.0.1
+  proxyPort: 10808
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.example.knowmateadmin.filter.JwtAuthFilter: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"

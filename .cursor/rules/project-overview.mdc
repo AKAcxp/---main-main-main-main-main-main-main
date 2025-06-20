@@ -1,0 +1,146 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 项目总览
+本项目是一个基于 Spring Boot (后端) + Vue3 (前端) 的智能饮食推荐系统。主要模块：用户管理、个人健康档案、饮食日志、运动日志、智能饮食推荐、AI 聊天助手、管理后台等。
+
+---
+
+## 1?? 通用编码规范
+- Java 使用 JDK 17，Vue3 使用 Vite 构建
+- 后端接口风格：RESTful（使用 /api/xxx 作为前缀）
+- 前后端交互使用 JSON，前端 axios 请求
+- 后端使用 MyBatis-Plus 进行数据库操作
+- 代码要模块化，分层清晰（Controller / Service / Mapper / Entity / DTO）
+- 关键方法要加注释，便于后续维护
+
+---
+
+## 2?? 用户认证和权限管理
+- 使用 Spring Security + JWT 认证，所有接口除注册/登录外均需验证 token
+- token 从前端 localStorage 中获取，通过 axios 请求拦截器放到请求头（Authorization: Bearer token）
+- 后端统一使用 JwtAuthFilter 过滤器校验 token
+- 角色：ROLE_USER / ROLE_NUTRITIONIST / ROLE_ADMIN / ROLE_TESTER
+- 角色权限可用 @PreAuthorize 注解实现
+
+---
+
+## 3?? 各模块功能要求
+### ? 用户账户管理模块
+- 提供注册、登录接口（/api/auth/register, /api/auth/login）
+- 登录成功返回 JWT，注册成功返回注册结果
+- 密码安全存储，建议使用 BCrypt 加密
+- 用户表（users）：id, username, password, email, role, created_at, updated_at
+
+### ? 用户健康档案模块
+- 用户填写或更新健康档案（身高、体重、目标、饮食偏好、不吃的食物）
+- 后端自动计算 BMI 并返回健康状态
+- 接口：/api/user/info（GET 查询，POST/PUT 更新）
+- 使用 DTO（UserInfoDTO）传输数据，避免直接使用 Entity
+
+### ? 饮食日志模块
+- 用户记录每日饮食：食物、热量、用餐时间
+- 提供查询、添加、删除接口
+- 表：meal_log (id, user_id, food, calories, meal_time, created_at, updated_at)
+
+### ? 运动日志模块
+- 用户记录运动：项目、时长、消耗热量、时间
+- 提供查询、添加、删除接口
+- 表：exercise_log (id, user_id, activity, duration, calories_burned, exercise_time, created_at, updated_at)
+
+### ? 饮食推荐引擎
+- 后端 DietRecommendationService 核心算法根据用户健康档案生成推荐
+- 提供接口：/api/recommendation（GET，返回推荐食物列表）
+- 算法要考虑用户目标（增肌/减脂）和口味偏好
+
+### ? AI 聊天助手
+- 前端页面可输入问题，后端对接 Google Gemini API 获取回答
+- 后端配置 AI Key 到 application.yml，使用 GoogleAiService 处理请求
+- 提供接口：/api/ai/chat
+
+---
+
+## 4?? 数据库与配置
+- 使用 MySQL，表结构与 Entity、Mapper 对应
+- 数据库连接配置在 application.yml 中管理
+- 使用 HikariCP 做连接池
+- 所有数据库表要有 created_at, updated_at 字段
+
+---
+
+## 5?? 前端规范
+- Vue3 + Element Plus 做页面布局
+- 前端路由 Vue Router，状态管理 Pinia
+- axios 封装请求拦截器，自动添加 token
+- 使用 ECharts 显示 BMI 变化、饮食趋势
+- 每个功能（用户档案、饮食日志、运动日志、AI 聊天助手等）做成独立页面或模块，保持代码整洁
+
+---
+
+## 6?? 错误与返回格式
+- 后端统一使用 ApiResponse（或 ResponseEntity）封装结果：包含 code, message, data
+- 前端根据返回 code 做友好提示（如 401 未登录，400 参数不全等）
+
+---
+
+## 7?? 开发流程建议
+1?? 确认数据库表结构并完成建表
+2?? 后端逐模块编写：Entity → Mapper → Service → Controller → DTO
+3?? 前端编写页面，调用后端接口
+4?? 确认各模块交互流畅，完善 AI 助手、图表可视化
+5?? 角色权限、用户体验优化
+
+---
+
+# ?? 智能饮食推荐系统开发 - Rules
+
+? 本项目已完成以下核心模块，请不要改动：
+- 用户注册/登录（JWT 认证、Spring Security 权限管理）
+- 用户健康档案（身高、体重、BMI、目标、饮食偏好）管理模块
+- 饮食日志模块（MealLog）
+- 运动日志模块（ExerciseLog）
+- AI 聊天助手模块（已接入 Google Gemini）
+- 基础的饮食推荐引擎
+
+? 后端框架：
+- Spring Boot 3，MyBatis-Plus 做持久化
+- JWT 认证 + Spring Security，使用 JwtAuthFilter 拦截器
+- 前后端接口遵循 RESTful API 风格
+
+? 前端框架：
+- Vue3 + Element Plus + Pinia，axios 封装拦截器带 token
+
+---
+
+## ? 关键要求
+? 不要修改现有已实现功能模块（只做新增或明确提出的调整）
+
+? 如果我提出新的需求 / 新功能，请在现有模块的**基础上扩展**，不要覆盖或重写已有逻辑。
+例如：
+- 如果我让你新增一个「饮食打卡提醒」模块，就只在新模块目录下做，不要动已有的 /api/meal-log 或 /api/user/info 逻辑。
+- 如果我让你改「饮食推荐」接口，只改 `/api/recommendation` Controller 里对应部分，其他不动。
+
+?? 所有新增模块仍然按照以下要求：
+- 模块化：Controller → Service → DTO/Entity → Mapper
+- 统一使用 JWT 校验（加 @PreAuthorize ）
+- 返回数据用统一 ApiResponse 结构（含 code, message, data）
+- 数据库操作用 MyBatis-Plus（如必要时，写对应 XML Mapper）
+- 前端页面用 Element Plus 组件库
+- 前端 axios 带 token，状态管理用 Pinia
+
+---
+
+### ? 小结
+1?? 保持现有功能完整、不被覆盖
+2?? 新功能以模块化方式扩展，代码风格保持一致
+3?? 所有改动有注释，便于后期维护
+
+---
+
+这样，Cursor 在你下一次生成代码、修 Bug 或加新接口时，就会明确知道：
+? 不能动你的**现有模块**
+? 只能在你指定的新需求下，做「增量式开发」
+? 避免「改乱」已经稳定的部分
+

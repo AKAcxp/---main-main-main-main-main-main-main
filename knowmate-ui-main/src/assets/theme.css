@@ -1,0 +1,214 @@
+:root {
+    /* Light Theme (Default) */
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --card-bg-color: #ffffff;
+    --input-bg-color: #f6f6f6;
+    --button-text-color: #ffffff;
+    --user-message-color: #409eff;
+    --ai-message-color: #67c23a;
+    --border-color: #efefef;
+    --table-header-bg-color: #f5f7fa;
+    --table-row-hover-bg-color: #f5f7fa;
+    --table-striped-row-bg-color: #fafafa;
+}
+
+.light-theme-custom,
+.light-theme {
+    /* Light Theme (Default) */
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --card-bg-color: #ffffff;
+    --input-bg-color: #f6f6f6;
+    --button-text-color: #ffffff;
+    --user-message-color: #409eff;
+    --ai-message-color: #67c23a;
+    --border-color: #efefef;
+    --table-header-bg-color: #f5f7fa;
+    --table-row-hover-bg-color: #f5f7fa;
+    --table-striped-row-bg-color: #fafafa;
+}
+
+.dark-theme-custom,
+.dark-theme {
+    /* Dark Theme */
+    --bg-color: #1a1a1a;
+    /* 深色背景 */
+    --text-color: #e0e0e0;
+    /* 浅色文本 */
+    --card-bg-color: #2c2c2c;
+    /* 卡片背景 */
+    --input-bg-color: #3a3a3a;
+    /* 输入框背景 */
+    --button-text-color: #e0e0e0;
+    --user-message-color: #79bbff;
+    /* 深色用户消息颜色，比亮色主题更柔和 */
+    --ai-message-color: #95d475;
+    /* 深色AI消息颜色 */
+    --border-color: #444444;
+    --table-header-bg-color: #2c2c2c;
+    --table-row-hover-bg-color: #3a3a3a;
+    --table-striped-row-bg-color: #333333;
+}
+
+/* General body styling using variables */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 内容区域的通用样式 */
+.content-area {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Element Plus 表格样式覆盖 */
+html.dark-theme-custom .el-table,
+html.dark-theme .el-table {
+    --el-table-bg-color: var(--card-bg-color);
+    --el-table-tr-bg-color: var(--card-bg-color);
+    --el-table-header-bg-color: var(--table-header-bg-color);
+    --el-table-border-color: var(--border-color);
+    --el-table-text-color: var(--text-color);
+    --el-table-header-text-color: var(--text-color);
+    --el-table-row-hover-bg-color: var(--table-row-hover-bg-color);
+    --el-table-current-row-bg-color: var(--table-row-hover-bg-color);
+    --el-table-fixed-box-shadow: var(--border-color);
+    --el-table-stripe-bg-color: var(--table-striped-row-bg-color);
+}
+
+html.light-theme-custom .el-table,
+html.light-theme .el-table {
+    --el-table-bg-color: var(--card-bg-color);
+    --el-table-tr-bg-color: var(--card-bg-color);
+    --el-table-header-bg-color: var(--table-header-bg-color);
+    --el-table-border-color: var(--border-color);
+    --el-table-text-color: var(--text-color);
+    --el-table-header-text-color: var(--text-color);
+    --el-table-row-hover-bg-color: var(--table-row-hover-bg-color);
+    --el-table-current-row-bg-color: var(--table-row-hover-bg-color);
+    --el-table-fixed-box-shadow: var(--border-color);
+    --el-table-stripe-bg-color: var(--table-striped-row-bg-color);
+}
+
+/* Element Plus 卡片样式覆盖 */
+html.dark-theme-custom .el-card,
+html.dark-theme .el-card {
+    --el-card-bg-color: var(--card-bg-color);
+    --el-card-border-color: var(--border-color);
+}
+
+html.light-theme-custom .el-card,
+html.light-theme .el-card {
+    --el-card-bg-color: var(--card-bg-color);
+    --el-card-border-color: var(--border-color);
+}
+
+/* Element Plus 输入框样式覆盖 */
+html.dark-theme-custom .el-input__inner,
+html.dark-theme .el-input__inner {
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+html.light-theme-custom .el-input__inner,
+html.light-theme .el-input__inner {
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+/* Element Plus 按钮样式覆盖 */
+html.dark-theme-custom .el-button:not(.el-button--primary):not(.el-button--success):not(.el-button--danger):not(.el-button--warning):not(.el-button--info),
+html.dark-theme .el-button:not(.el-button--primary):not(.el-button--success):not(.el-button--danger):not(.el-button--warning):not(.el-button--info) {
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+html.light-theme-custom .el-button:not(.el-button--primary):not(.el-button--success):not(.el-button--danger):not(.el-button--warning):not(.el-button--info),
+html.light-theme .el-button:not(.el-button--primary):not(.el-button--success):not(.el-button--danger):not(.el-button--warning):not(.el-button--info) {
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+/* Element Plus 表单样式覆盖 */
+html.dark-theme-custom .el-form-item__label,
+html.dark-theme .el-form-item__label {
+    color: var(--text-color);
+}
+
+html.light-theme-custom .el-form-item__label,
+html.light-theme .el-form-item__label {
+    color: var(--text-color);
+}
+
+/* Element Plus 分页样式覆盖 */
+html.dark-theme-custom .el-pagination,
+html.dark-theme .el-pagination {
+    --el-pagination-button-bg-color: var(--card-bg-color);
+    --el-pagination-button-color: var(--text-color);
+    --el-pagination-button-disabled-bg-color: var(--input-bg-color);
+    --el-pagination-button-disabled-color: #999;
+    --el-pagination-hover-color: #409eff;
+}
+
+html.light-theme-custom .el-pagination,
+html.light-theme .el-pagination {
+    --el-pagination-button-bg-color: var(--card-bg-color);
+    --el-pagination-button-color: var(--text-color);
+    --el-pagination-button-disabled-bg-color: var(--input-bg-color);
+    --el-pagination-button-disabled-color: #999;
+    --el-pagination-hover-color: #409eff;
+}
+
+/* Element Plus 日期选择器样式覆盖 */
+html.dark-theme-custom .el-date-editor,
+html.dark-theme .el-date-editor {
+    --el-datepicker-border-color: var(--border-color);
+    --el-datepicker-text-color: var(--text-color);
+    --el-datepicker-off-text-color: #999;
+    --el-datepicker-header-text-color: var(--text-color);
+    --el-datepicker-icon-color: var(--text-color);
+    --el-datepicker-inner-border-color: var(--border-color);
+    --el-datepicker-inrange-bg-color: #409eff20;
+    --el-datepicker-inrange-hover-bg-color: #409eff30;
+    --el-datepicker-active-color: #409eff;
+    --el-datepicker-hover-text-color: #409eff;
+}
+
+html.light-theme-custom .el-date-editor,
+html.light-theme .el-date-editor {
+    --el-datepicker-border-color: var(--border-color);
+    --el-datepicker-text-color: var(--text-color);
+    --el-datepicker-off-text-color: #999;
+    --el-datepicker-header-text-color: var(--text-color);
+    --el-datepicker-icon-color: var(--text-color);
+    --el-datepicker-inner-border-color: var(--border-color);
+    --el-datepicker-inrange-bg-color: #409eff20;
+    --el-datepicker-inrange-hover-bg-color: #409eff30;
+    --el-datepicker-active-color: #409eff;
+    --el-datepicker-hover-text-color: #409eff;
+}
+
+/* Element Plus 弹窗样式覆盖 */
+html.dark-theme-custom .el-dialog,
+html.dark-theme .el-dialog {
+    --el-dialog-bg-color: var(--card-bg-color);
+    --el-dialog-border-color: var(--border-color);
+    --el-dialog-content-font-color: var(--text-color);
+    --el-dialog-title-font-color: var(--text-color);
+}
+
+html.light-theme-custom .el-dialog,
+html.light-theme .el-dialog {
+    --el-dialog-bg-color: var(--card-bg-color);
+    --el-dialog-border-color: var(--border-color);
+    --el-dialog-content-font-color: var(--text-color);
+    --el-dialog-title-font-color: var(--text-color);
+}

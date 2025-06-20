@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.knowmateadmin.mapper.FoodMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.example.knowmateadmin.entity.Food">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="calories" property="calories" />
+        <result column="protein" property="protein" />
+        <result column="carbohydrate" property="carbohydrate" />
+        <result column="fat" property="fat" />
+        <result column="flavor" property="flavor" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, calories, protein, carbohydrate, fat, flavor
+    </sql>
+
+    <!-- 增肌推荐：高蛋白食物 -->
+    <select id="selectHighProteinFoods" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            food
+        WHERE
+            protein &gt; 15
+        ORDER BY
+            protein DESC
+    LIMIT #{limit}
+  </select>
+
+    <!-- 减脂推荐：低卡低脂食物 -->
+    <select id="selectLowCalorieLowFatFoods" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            food
+        WHERE
+            fat &lt; 10 AND calories &lt; 400
+        ORDER BY
+            calories ASC
+    LIMIT #{limit}
+  </select>
+
+    <!-- 均衡饮食推荐：适中卡路里食物 -->
+    <select id="selectBalancedFoods" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            food
+        WHERE
+            calories BETWEEN 300 AND 600
+        ORDER BY
+            RAND()
+    LIMIT #{limit}
+  </select>
+
+</mapper> 
