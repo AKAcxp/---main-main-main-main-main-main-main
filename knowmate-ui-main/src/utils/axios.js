@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "@/store/auth"; // 确保这个路径相对于 src 是正确的 (e.g., src/store/auth.js)
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080", // 您的后端 API 基础 URL
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8080", // 从环境变量获取API基础URL
   timeout: 30000,
 });
 

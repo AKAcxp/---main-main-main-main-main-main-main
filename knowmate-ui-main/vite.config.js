@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import path from "path"; // µ¼Èë path Ä£¿é
+import path from "path"; // å¯¼å…¥ path æ¨¡å—
 
-// ÒıÈë Element Plus °´Ğè×Ô¶¯µ¼Èë²å¼ş
+// å¼•å…¥ Element Plus æŒ‰éœ€è‡ªåŠ¨å¯¼å…¥æ’ä»¶
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
@@ -13,24 +13,28 @@ export default defineConfig({
     vue(),
     AutoImport({
       resolvers: [ElementPlusResolver({ importStyle: false })],
-      // ¿ÉÒÔÑ¡ÔñĞÔµØÎª eslint Éú³ÉÉùÃ÷ÎÄ¼ş£¬Èç¹ûÊ¹ÓÃ eslint
+      // å¯ä»¥é€‰æ‹©æ€§åœ°ä¸º eslint ç”Ÿæˆå£°æ˜æ–‡ä»¶ï¼Œå¦‚æœä½¿ç”¨ eslint
       dts: "src/auto-imports.d.ts",
     }),
     Components({
       resolvers: [ElementPlusResolver({ importStyle: false })],
-      // ¿ÉÒÔÑ¡ÔñĞÔµØÎª eslint Éú³ÉÉùÃ÷ÎÄ¼ş
+      // å¯ä»¥é€‰æ‹©æ€§åœ°ä¸º eslint ç”Ÿæˆå£°æ˜æ–‡ä»¶
       dts: "src/components.d.ts",
     }),
   ],
+  // å®šä¹‰ç¯å¢ƒå˜é‡
+  define: {
+    "import.meta.env.VITE_API_URL": JSON.stringify("http://localhost:8080"),
+  },
   resolve: {
-    // Ìí¼Ó resolve ÅäÖÃ
+    // æ·»åŠ  resolve é…ç½®
     alias: {
-      "@": path.resolve(__dirname, "./src"), // ÉèÖÃ @ Ö¸Ïò src Ä¿Â¼
+      "@": path.resolve(__dirname, "./src"), // è®¾ç½® @ æŒ‡å‘ src ç›®å½•
     },
   },
   server: {
-    port: 5173, // Ö¸¶¨¶Ë¿ÚÎª5173
-    strictPort: true, // Èç¹û¶Ë¿ÚÒÑ±»Õ¼ÓÃ£¬ÔòÖ±½ÓÍË³ö
+    port: 5173, // æŒ‡å®šç«¯å£ä¸º5173
+    strictPort: true, // å¦‚æœç«¯å£å·²è¢«å ç”¨ï¼Œåˆ™ç›´æ¥é€€å‡º
     proxy: {
       // Example: simple string shorthand
       // '/foo': 'http://localhost:4567/foo',

@@ -56,19 +56,63 @@ const uploadHeaders = computed(() => {
 
 function handleSuccess(response, file) {
   console.log('上传成功响应:', response);
+  console.log('上传响应类型:', typeof response);
+  console.log('上传文件信息:', file);
+  
   // 检查响应格式，适应不同的后端返回格式
-  if (response.code === 200) {
+  let url = null;
+  
+  if (response.code === 200 && response.data) {
     // 标准格式：{ code: 200, data: 'url', message: 'success' }
-    form.mediaUrls.push(response.data);
-    ElMessage.success('图片上传成功');
+    url = response.data;
+    console.log('标准格式提取的URL:', url);
   } else if (response.data && response.data.url) {
     // 替代格式：{ data: { url: 'url' } }
-    form.mediaUrls.push(response.data.url);
-    ElMessage.success('图片上传成功');
+    url = response.data.url;
+    console.log('替代格式提取的URL:', url);
   } else if (typeof response === 'string') {
     // 简单字符串URL格式
-    form.mediaUrls.push(response);
+    url = response;
+    console.log('字符串格式URL:', url);
+  } else {
+    // 尝试直接获取响应中的URL
+    if (typeof response === 'object') {
+      // 遍历对象的所有属性，查找可能的URL
+      for (const key in response) {
+        if (typeof response[key] === 'string' && 
+            (response[key].startsWith('/uploads/') || 
+             response[key].startsWith('http'))) {
+          url = response[key];
+          console.log('从对象中找到URL属性:', key, url);
+          break;
+        }
+      }
+    }
+  }
+  
+  if (url) {
+    // 确保URL格式正确
+    if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('/uploads/')) {
+      url = '/uploads/' + url;
+      console.log('格式化后的URL:', url);
+    }
+    
+    form.mediaUrls.push(url);
+    console.log('已添加URL到mediaUrls:', url);
+    console.log('当前mediaUrls:', form.mediaUrls);
     ElMessage.success('图片上传成功');
+    
+    // 尝试加载图片验证URL是否有效
+    const img = new Image();
+    img.onload = () => {
+      console.log('图片加载成功:', url);
+    };
+    img.onerror = () => {
+      console.error('图片加载失败:', url);
+    };
+    const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+    const fullUrl = url.startsWith('http') ? url : (url.startsWith('/') ? baseUrl + url : baseUrl + '/' + url);
+    img.src = fullUrl;
   } else {
     ElMessage.error('图片上传失败，返回格式不正确');
     console.error('上传响应格式不正确:', response);

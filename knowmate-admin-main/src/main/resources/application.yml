@@ -24,7 +24,7 @@ spring:
     static-path-pattern: /**
   web:
     resources:
-      static-locations: classpath:/static/,file:./uploads/
+      static-locations: classpath:/static/,file:./uploads/,file:uploads/
 
 # 文件上传目录配置
 file:
